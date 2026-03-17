@@ -1,63 +1,61 @@
-# Sobre CAsim
-CAsim es un lenguaje de dominio específico para simular autómatas celulares; provee una forma sencilla
-y expresiva de definirlos y permite observar sus evoluciones con una interfaz gráfica amigable y fácil de usar.
+# About CAsim
+CAsim is a DSL for cellular automaton simulation. It provides a simple and expressive way to define them
+and observe their evolution with a friendly and easy to use graphic interface.
 
 
-# Guía de instalación
+# Installation guide
 
-El programa necesita las librerias de C de OpenGL y GLUT. En Ubuntu, se pueden instalar con:
+The program requires the OpenGL and GLUT c libraries. In Debian-based distros, they can be installed with:
 
-sudo apt install freeglut3-dev libgl1-mesa-dev
+`sudo apt install freeglut3-dev libgl1-mesa-dev`
 
-También se necesita la herramienta stack. Para instalarlo consulte su página: https://docs.haskellstack.org/en/stable/
-
-Todo lo demás necesario debería ser instalado automáticamente por stack al correr stack build.
+Stack is also needed. Check its web page to install it: https://docs.haskellstack.org/en/stable/
 
 
-# Guía de uso
+# Use guide
 
-Para compilar el programa, usar:
+to compile, simply run:
 
-stack build
+`stack build`
 
-Una vez compilado, para ejecutar el programa, usar:
+once compiled, to execute the program use:
 
-stack exec CAsim-exe -- FILEPATH [OPTIONS]
+`stack exec CAsim-exe -- FILEPATH [OPTIONS]`
 
-donde FILEPATH es la ubicación del archivo en el que está definido el autómata.
+where FILEPATH is the path to the file where the cellular automaton is defined.
 
-[OPTIONS] es una serie de opciones que se detallan a continuación:
-- -r N la cantidad de filas de la red pasa a ser N (valor por defecto: 100 , mínimo: 10, máximo: 1000)
+[OPTIONS] is a series of following options:
 
-- -c M la cantidad de columnas de la red pasa a ser M (valor por defecto: 100 , mínimo: 10, máximo: 1000)
+- -r N the amount of rows of lattice will be N (default value: 100, min: 10, max: 1000)
 
-- -f CHOICE, donde CHOICE es toroidal o default, especifica el tipo de frontera en la simulación (valor
-por defecto: default)
+- -c M the amount of columns of lattice will be M (default value: 100, min: 10, max: 1000)
 
-- -s K la cantidad de pasos por segundo en la simulación pasa a ser K (valor por defecto: 10 , mínimo: 1,
-máximo: 30)
+- -f CHOICE, where CHOICE is toroidal or default, speficies the type of forntier in simulation (default value: default).
+In default mode, the neighbors outside the lattice will be assumed of the default state.
+In toroidal mode, the lattice is considered a toroid.
 
-- -g CHOICE, donde CHOICE es seq o par, especifica si la función de transición global computa cada celda
-secuencialmente o en paralelo respectivamente (valor por defecto: par). La opción en paralelo hará
-que el programa use todos los núcleos disponibles.
+- -s K the number of steps per second will be K (default value: 10, min: 1, max: 30)
 
-Una vez ejecutado, se abrirá una ventana gráfica para comenzar la simulación.
+- -g CHOICE, where CHOICE is seq or par, specifies if global transition function will compute each cell
+sequencially or in parallel respectively (default value: par). par option will used all available cores.
 
-Para manipular la simulación, CAsim ofrece los siguientes eventos:
 
-- lick izquierdo sobre una celda rota su estado entre los definidos. Esto permite dar la configuración
-inicial y solo es posible si la simulación todavía no ha comenzado.
+Once executed, a graphic window will open to start simulation. To manipulate it, CAsim offers the following inputs:
 
-- Barra espaciadora pausa/reanuda la simulación.
+- Left click on a cell will rotate its state through those defined.
 
-- N avanza la simulación en un solo paso. Solo funciona si está en pausa.
+- Space bar pauses/resumes simulation.
 
-- R reanuda la simulación al estado inicial.
+- N to go one step forward in simulation. Only posible if simulation is paused.
 
-- WASD para mover la cámara.
+- R restarts simulation to initial state.
 
-- C regresa la cámara al centro.
+- WASD to move camera.
 
-- Rueda del ratón/flechas arriba y abajo para acercar/alejar la cámara.
+- C camera goes back to the center.
 
-- ESC cierra la ventana y finaliza el programa.
+- mouse wheel/up and down arrows to zoom in and out.
+
+- ESC closes window and finishes execution.
+
+In the examples folder there are several cellular automatons given as examples.
