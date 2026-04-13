@@ -30,11 +30,11 @@ where `FILEPATH` is the path to the file where the cellular automaton is defined
 
 `[OPTIONS]` is a series of following options:
 
-- `-r N` the amount of rows of lattice will be N (default value: 100, min: 10, max: 1000)
+- `-r N` the amount of rows of lattice will be `N` (default value: 100, min: 10, max: 1000)
 
-- `-c M` the amount of columns of lattice will be M (default value: 100, min: 10, max: 1000)
+- `-c M` the amount of columns of lattice will be `M` (default value: 100, min: 10, max: 1000)
 
-- `-f CHOICE`, where `CHOICE` is toroidal or default, speficies the type of forntier in simulation (default value: default).
+- `-f CHOICE`, where `CHOICE` is `toroidal` or `default`, speficies the type of frontier in simulation (default value: `default`).
 In default mode, the neighbors outside the lattice will be assumed of the default state.
 In toroidal mode, the lattice is considered a toroid.
 
