@@ -154,7 +154,7 @@ set of states described, otherwise evaluates to `False`. This is basically synta
 
 # Example
 
-In this example we will take a look at the clasic Game of Life by John Horton Conway. This cellular automaton is simple:
+In this example we will take a look at the classic Game of Life by John Horton Conway. This cellular automaton is very simple:
 - There are two states: `alive` and `dead`.
 - The neighborhood used is the one known as Moore neighborhood, where the neighbors are the 8 adjacent cells.
 - The transition rule is as follows:
@@ -184,8 +184,8 @@ Automaton GameOfLife {
 As you can see, we defined the states `alive` and `dead` and we gave them te colors black and white. The Moore neighborhood is given
 as the list of all adjacent cells and all cells are dead by default.
 
-In the transition rule, we declared an variable `x` with the value `neighbors(#alive)`, that is, the amount of alive neighbors. We need
+In the transition rule, we declared a variable `x` with the value `neighbors(#alive)`, that is, the amount of alive neighbors. We need
 to use this number several times in the transition definition, to it is useful to store it in a variable. After that, it is simply a
-matter of checking the conditions of the rule to determine the state of the cell in the next generation:
+matter of checking the conditions of the rule to determine the state of the cell in the next generation.
 
 The `examples` directory provides several examples of already defined cellular automatons (like this one).
