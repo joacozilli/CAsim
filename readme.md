@@ -90,10 +90,10 @@ Where:
 All the posible colors are: white, black, gray, red, lightred, blue, lighblue, yellow, darkyellow, green, darkgreen,
 cyan, magenta, azure, orange, rose and violet.
 - each `(x_i,y_i)` in `Neighborhood` is a pair of integers such that, for any cell `(a,b)`, `(a + x_i, b + y_i)` is a neighbor of `(a,b)`
+(looking at the grid as cartesian coordinate system).
 - `TRANSITION_RULE` is, as the name indicates, the transition rule (or local rule) of the cellular automaton. More information below.
-- `DEFAULT_STATE` is the default state of all the cells a the beginning. It must be a defined state in `States`.
+- `DEFAULT_STATE` is the default state of all the cells at the beginning. It must be a defined state in `States`.
 
-The `examples` directory provides several examples of already defined cellular automatons.
 
 # Transition Rule
 
@@ -129,4 +129,59 @@ BOOLEXP ::= ’False’ | ’True’
         | STATEEXP ’==’ STATEEXP
         | STATEEXP ’!=’ STATEEXP
         | STATEEXP ’in’ ’[’ SET ’]’
+
+IDENT := any string valid as an identifier (starts with a letter, has no special characters
+and isn't a key word of the language)
 ```
+
+As you can see, the transition rule has three basic constructors:
+    - `if then else` for conditional expressions.
+    - `case` as syntatic sugar for nested `if`'s.
+    - `let in` to declare integer variables.
+
+Earlier it was said that the local rule takes the states of the cell and its neighbors implicitly as arguments. This
+values can be accessed with the key word `cell` (for the cell's state) and `nei(k)` (for the k-th neighbor's state, where
+the k-th neighbor is the neighbor number k in the `Neighborhood` list provided in the definition).
+
+To name a defined state in `States` in the rule, use the syntaxis `#STATE_NAME`.
+
+It is provided the built-in function `neighbors(STATE_NAME)` that returns the number of neighbors that are in the
+state `STATE_NAME`. 
+
+# Example
+
+In this example we will take a look at the clasic Game of Life by John Horton Conway. This cellular automaton is simple:
+- There are two states: `alive` and `dead`.
+- The neighborhood used is the one known as Moore neighborhood, where the neighbors are the 8 adjacent cells.
+- The transition rule is as follows:
+    - An alive cell remains alive if exactly 2 or 3 neighbors are alive. Otherwise, it dies by undepopulation or overpopulation.
+    - A dead cell becomes alive if exactly 3 neighbors are alive. Otherwise, it remains dead.
+
+```
+Automaton GameOfLife {
+
+    States := alive : black | dead : white
+
+    Neighborhood := (1,0) | (0,1) | (-1,0) | (0,-1) | (1,1) | (-1,-1) | (1,-1) | (-1,1)
+
+    Transition {
+        let x = neighbors(#alive) in
+            if cell == #alive
+                then
+                    if x == 3 or x == 2 then #alive else #dead
+                else
+                    if x != 3 then #dead else #alive
+    }
+
+    Default := dead
+}
+```
+
+As you can see, we defined the states `alive` and `dead` and we gave them te colors black and white. The Moore neighborhood is given
+as the list of all adjacent cells and all cells are dead by default.
+
+In the transition rule, we declared an variable `x` with the value `neighbors(#alive)`, that is, the amount of alive neighbors. We need
+to use this number several times in the transition definition, to it is useful to store it in a variable. After that, it is simply a
+matter of checking the conditions of the rule to determine the state of the cell in the next generation:
+
+The `examples` directory provides several examples of already defined cellular automatons (like this one).
