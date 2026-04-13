@@ -28,7 +28,7 @@ once compiled, to execute the program use:
 
 where `FILEPATH` is the path to the file where the cellular automaton is defined.
 
-[OPTIONS] is a series of following options:
+`[OPTIONS]` is a series of following options:
 
 - `-r N` the amount of rows of lattice will be N (default value: 100, min: 10, max: 1000)
 
