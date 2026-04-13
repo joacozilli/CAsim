@@ -146,7 +146,11 @@ the k-th neighbor is the neighbor number k in the `Neighborhood` list provided i
 To name a defined state in `States` in the rule, use the syntaxis `#STATE_NAME`.
 
 It is provided the built-in function `neighbors(STATE_NAME)` that returns the number of neighbors that are in the
-state `STATE_NAME`. 
+state `STATE_NAME`.
+
+There is also the boolean constructor `STATE in [STATE_1,...,STATE_k]` that evaulates to `True` if `STATE` is in the
+set of states described, otherwise evaluates to `False`. This is basically syntactic sugar for
+`STATE == STATE_1 or ... or STATE == STATE_k`.
 
 # Example
 
