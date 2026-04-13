@@ -11,6 +11,10 @@ The program requires the OpenGL and GLUT c libraries. In Debian-based distros, t
 
 Stack is also needed. Check its web page to install it: https://docs.haskellstack.org/en/stable/
 
+To install CAsim, you can clone the repository:
+
+`git clone git@github.com:joacozilli/CAsim.git`
+
 
 # Use guide
 
@@ -59,3 +63,70 @@ Once executed, a graphic window will open to start simulation. To manipulate it,
 - ESC closes window and finishes execution.
 
 In the examples folder there are several cellular automatons given as examples.
+
+
+# Cellular Automaton Definition
+
+CAsim reads the cellular automaton definition from the provided file, which must be a text file. The syntaxis is described
+as follows:
+
+```
+Automaton NAME {
+
+    States := STATE_1 : COLOR_1 | ... | STATE_N : COLOR_N
+
+    Neighborhood := (x_1,y_1) | ... | (x_m,y_m)
+
+    Transition {
+        TRANSITION_RULE
+    }
+
+    Default := DEFAULT_STATE
+}
+```
+Where:
+- `NAME` is the name of your cellular automaton.
+- each `STATE_i` is the name of a possible state a cell can be, with `COLOR_i` the color it will be represented with in the simulation.
+All the posible colors are: white, black, gray, red, lightred, blue, lighblue, yellow, darkyellow, green, darkgreen,
+cyan, magenta, azure, orange, rose and violet.
+- each `(x_i,y_i)` in `Neighborhood` is a pair of integers such that, for any cell `(a,b)`, `(a + x_i, b + y_i)` is a neighbor of `(a,b)`
+- `TRANSITION_RULE` is, as the name indicates, the transition rule (or local rule) of the cellular automaton. More information below.
+- `DEFAULT_STATE` is the default state of all the cells a the beginning. It must be a defined state in `States`.
+
+The `examples` directory provides several examples of already defined cellular automatons.
+
+# Transition Rule
+
+The transition/local rule is what makes a cellular automaton interesting. It is a function that is applied to all cells in every instant,
+which results in a new configuration. It takes the states of the cell and its neighbors implicitly as arguments and calculates the state of the
+cell in the next instant.
+
+The concrete syntax of the transition rule is given below:
+
+```
+RULE ::= STATEEXP
+        | ’if’ BOOLEXP ’then’ RULE ’else’ RULE
+        | ’case’ ’{’ COND’}’
+        | ’let’ IDENT ’=’ INTEXP ’in’ RULE
+
+COND ::= ’otherwise’ ’:’ ’{’ RULE ’}’
+        | BOOLEXP ’:’ ’{’ RULE ’}’ COND
+
+STATEEXP ::= ’#’ IDENT | ’cell’ | ’nei’ ’(’ NAT ’)’
+
+INTEXP ::= INT | ’neighbors’ ’(’ STATEEXP ’)’ | ’-’ INTEXP | IDENT
+
+BOOLEXP ::= ’False’ | ’True’
+        | BOOLEXP ’and’ BOOLEXP
+        | BOOLEXP ’or’ BOOLEXP
+        | ’not’ BOOLEXP
+        | INTEXP ’==’ INTEXP
+        | INTEXP ’<=’ INTEXP
+        | INTEXP ’<’ INTEXP
+        | INTEXP ’>=’ INTEXP
+        | INTEXP ’>’ INTEXP
+        | INTEXP ’!=’ INTEXP
+        | STATEEXP ’==’ STATEEXP
+        | STATEEXP ’!=’ STATEEXP
+        | STATEEXP ’in’ ’[’ SET ’]’
+```
