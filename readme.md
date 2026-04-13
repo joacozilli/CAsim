@@ -135,9 +135,9 @@ and isn't a key word of the language)
 ```
 
 As you can see, the transition rule has three basic constructors:
-    - `if then else` for conditional expressions.
-    - `case` as syntatic sugar for nested `if`'s.
-    - `let in` to declare integer variables.
+- `if then else` for conditional expressions.
+- `case` as syntatic sugar for nested `if`'s.
+- `let in` to declare integer variables.
 
 Earlier it was said that the local rule takes the states of the cell and its neighbors implicitly as arguments. This
 values can be accessed with the key word `cell` (for the cell's state) and `nei(k)` (for the k-th neighbor's state, where
